@@ -25,4 +25,8 @@ public class ConexionSingleton {
     public Connection getConnection() {
         return connection;
     }
+    public void cerrarConexion() throws SQLException {
+        if (connection != null)
+            connection.close();
+    }
 }
