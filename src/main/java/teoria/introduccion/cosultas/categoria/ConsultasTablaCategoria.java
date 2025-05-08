@@ -3,10 +3,7 @@ package teoria.introduccion.cosultas.categoria;
 import teoria.introduccion.accesoBD.ConexionSingleton;
 import teoria.introduccion.clases.Categoria;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +45,23 @@ public class ConsultasTablaCategoria {
         }
         return categoria;
     }
+    public String getNombreCategoriaByIdMejorado (int id) {
+        String categoria = "";
+        String sql = "SELECT nombre FROM categoria WHERE id = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next())
+                categoria = resultSet.getString("nombre");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return categoria;
+    }
+
+
+
+
 }
 
 

@@ -18,13 +18,21 @@ public class Main {
         idCategoria = 15;
         categoria = tablaCategoria.getNombreCategoriaById(idCategoria);
         System.out.printf("Para id: %d, la categoría es: %S%n", idCategoria, categoria);
+        idCategoria = 2;
+        categoria = tablaCategoria.getNombreCategoriaByIdMejorado(idCategoria);
+        System.out.printf("Para id: %d, la categoría es: %S%n", idCategoria, categoria);
+
         System.out.println("============libros categorias==============");
         ConsultaLibroCategoria libroCategoria = new ConsultaLibroCategoria();
         List<LibroCategoria> libroCategorias = libroCategoria.getLibroCategorias();
         libroCategorias.forEach(System.out::println);
         System.out.println("============libros categorias por categorias==============");
-        String categoriaBusqueda = "Ofi OR 1 == 1";
+        String categoriaBusqueda = "Ofimatica";
         libroCategorias = libroCategoria.getLibrosCategoriaByCategoria(categoriaBusqueda);
+        libroCategorias.forEach(System.out::println);
+        System.out.println("*************************");
+        categoriaBusqueda = "Programacion";
+        libroCategorias = libroCategoria.getLibrosCategoriaByCategoriaMejorado(categoriaBusqueda);
         libroCategorias.forEach(System.out::println);
 
 

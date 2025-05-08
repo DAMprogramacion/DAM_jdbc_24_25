@@ -58,7 +58,7 @@ public class Libro {
         return String.format("%d,%s,%s,%s", idLibro, nombreLibro, editorial, autor);
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Libro libro = (Libro) o;
@@ -68,5 +68,5 @@ public class Libro {
     @Override
     public int hashCode() {
         return Objects.hashCode(idLibro);
-    }
+    }*/
 }
