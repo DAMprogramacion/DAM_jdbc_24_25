@@ -8,10 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -29,9 +26,21 @@ public class UsuarioDAOImpl implements usuarioDAO{
     }
 
     @Override
-    public boolean insertarUsuario(Usuario usuario) {
-
-        return false;
+    public boolean insertarUsuario(Usuario usuarioNew) {
+        Usuario usuario = getUsuarioPorDNI(usuarioNew.getDni());
+        if (usuario != null)
+            return false;
+        String sql = "INSERT INTO usuario VALUES (?, ?, ?)";
+        int rows = 0;
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setString(1, usuarioNew.getDni());
+            statement.setString(2, usuarioNew.getNombreUsuario());
+            statement.setString(3, usuarioNew.getApellidos());
+            rows = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rows == 1;
     }
 
     @Override
@@ -51,17 +60,53 @@ public class UsuarioDAOImpl implements usuarioDAO{
 
     @Override
     public Usuario getUsuarioPorDNI(String dni) {
-        return null;
+        String sql = " SELECT * FROM usuario WHERE dni = ?;";
+        Usuario usuario = null;
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setString(1, dni);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next())
+                 usuario = new Usuario(resultSet.getString("dni"), resultSet.getString("nombre"),
+                        resultSet.getString("apellidos"));
+            resultSet.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return usuario;
     }
 
     @Override
-    public Usuario updateUsuario(Usuario usuario) {
-        return null;
+    public Usuario updateUsuario(Usuario usuarioNew) {
+        String sql = "UPDATE usuario SET nombre = ?, apellidos = ? WHERE dni = ?;";
+        int rows = 0;
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setString(1, usuarioNew.getNombreUsuario());
+            statement.setString(2, usuarioNew.getApellidos());
+            statement.setString(3, usuarioNew.getDni());
+            rows = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (rows != 1)
+            return null;
+        return usuarioNew;
     }
 
     @Override
     public boolean borrarUsuarioPorDNI(String dni) {
-        return false;
+        /*Usuario usuario = getUsuarioPorDNI(dni);
+        if (usuario != null)
+            return false;*/
+        String sql = " DELETE FROM usuario WHERE dni = ?";
+        int rows = 0;
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setString(1, dni);
+            rows = statement.executeUpdate();
+            System.out.println("filas: " + rows);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rows == 1;
     }
 
     @Override
