@@ -16,6 +16,15 @@ public class Video {
     private String descarga;
     private float duracion;
 
+    public Video(String idVideo, String titulo, String sinopsis, String imagen, String descarga, float duracion) {
+        this.idVideo = idVideo;
+        this.titulo = titulo;
+        this.sinopsis = sinopsis;
+        this.imagen = imagen;
+        this.descarga = descarga;
+        this.duracion = duracion;
+    }
+
     public Video(String titulo, String sinopsis,
                  String imagen, String descarga, float duracion) {
         this.idVideo = Helper.generarUUID();

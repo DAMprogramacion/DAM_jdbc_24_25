@@ -8,6 +8,7 @@ import ejercicio.modelos.Pelicula;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class PeliculaDAOImpl implements PeliuculaDAO {
     private Connection conn = Conexion.getInstance().getConnection();
@@ -57,8 +58,36 @@ public class PeliculaDAOImpl implements PeliuculaDAO {
     }
 
     @Override
-    public Pelicula borrarPeliculaPorId(String id) {
+    public boolean borrarPeliculaPorId(String id) {
+        String sql = "delete FROM video WHERE idVideo = ?;";
+        int rows = 0;
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, id);
+            rows = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rows == 1;
+    }
+
+    @Override
+    public Pelicula obtenerPeliculaPorId(String id) {
         return null;
+    }
+
+    @Override
+    public List<Pelicula> obtenerTodasPeliculas() {
+        return List.of();
+    }
+
+    @Override
+    public List<Pelicula> obtenerPeliculasSegunValoracion(int valoracion) {
+        return List.of();
+    }
+
+    @Override
+    public List<Pelicula> obtenerTodasPeliculasOrdenadasPorValoracion() {
+        return List.of();
     }
 
 
@@ -66,6 +95,8 @@ public class PeliculaDAOImpl implements PeliuculaDAO {
         Pelicula pelicula = new Pelicula( "1", "1", "1",
                 "1", 200, "1", 1);
         PeliuculaDAO dao = new PeliculaDAOImpl();
-        dao.insertarPelicula(pelicula);
+        //dao.insertarPelicula(pelicula);
+        boolean exito = dao.borrarPeliculaPorId("10");
+        System.out.printf("Borrada película? %B%n", exito);
     }
 }

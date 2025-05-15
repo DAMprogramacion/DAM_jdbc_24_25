@@ -10,8 +10,15 @@ public class Pelicula extends Video{
     private String director;
     private int valoracion;
 
-    public Pelicula( String titulo, String sinopsis, String imagen, String descarga, float duracion,
-                     String director, int valoracion) throws ValoracionException {
+    public Pelicula(String idVideo, String titulo, String sinopsis, String imagen, String descarga, float duracion,
+                    String director, int valoracion) {
+        super(idVideo, titulo, sinopsis, imagen, descarga, duracion);
+        this.director = director;
+        this.valoracion = valoracion;
+    }
+
+    public Pelicula(String titulo, String sinopsis, String imagen, String descarga, float duracion,
+                    String director, int valoracion) throws ValoracionException {
         super( titulo, sinopsis, imagen, descarga, duracion);
         if (valoracion > 0 && valoracion < 6) {
            // this.idPelicula = id;

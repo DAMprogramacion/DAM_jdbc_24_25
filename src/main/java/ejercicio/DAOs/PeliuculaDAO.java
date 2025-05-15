@@ -2,7 +2,13 @@ package ejercicio.DAOs;
 
 import ejercicio.modelos.Pelicula;
 
+import java.util.List;
+
 public interface PeliuculaDAO {
     void insertarPelicula (Pelicula pelicula);
-    Pelicula borrarPeliculaPorId(String id);
+    boolean borrarPeliculaPorId(String id);
+    Pelicula obtenerPeliculaPorId(String id);
+    List<Pelicula> obtenerTodasPeliculas();
+    List<Pelicula> obtenerPeliculasSegunValoracion(int valoracion);
+    List<Pelicula> obtenerTodasPeliculasOrdenadasPorValoracion();
 }
