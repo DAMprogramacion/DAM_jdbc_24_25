@@ -1,4 +1,7 @@
 package ejercicio.modelos;
+
+import ejercicio.Helper;
+
 /*idVideo TEXT  PRIMARY KEY,
     titulo TEXT NOT NULL,
     sinopsis TEXT,
@@ -13,9 +16,9 @@ public class Video {
     private String descarga;
     private float duracion;
 
-    public Video(String idVideo, String titulo, String sinopsis,
+    public Video(String titulo, String sinopsis,
                  String imagen, String descarga, float duracion) {
-        this.idVideo = idVideo;
+        this.idVideo = Helper.generarUUID();
         this.titulo = titulo;
         this.sinopsis = sinopsis;
         this.imagen = imagen;

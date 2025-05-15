@@ -6,24 +6,24 @@ import ejercicio.excepciones.ValoracionException;
     director TEXT,
     valoracion INTEGER CHECK (valoracion BETWEEN 1 AND 5),*/
 public class Pelicula extends Video{
-    private String idPelicula;
+    //private String idPelicula;
     private String director;
     private int valoracion;
 
-    public Pelicula(String id, String titulo, String sinopsis, String imagen, String descarga, float duracion,
+    public Pelicula( String titulo, String sinopsis, String imagen, String descarga, float duracion,
                      String director, int valoracion) throws ValoracionException {
-        super(id, titulo, sinopsis, imagen, descarga, duracion);
+        super( titulo, sinopsis, imagen, descarga, duracion);
         if (valoracion > 0 && valoracion < 6) {
-            this.idPelicula = id;
+           // this.idPelicula = id;
             this.director = director;
             this.valoracion = valoracion;
         } else
             throw new ValoracionException("La valoración de la película debes estar comprendida entre 1 y 5");
     }
 
-    public String getIdPelicula() {
+    /*public String getIdPelicula() {
         return idPelicula;
-    }
+    }*/
 
     public String getDirector() {
         return director;

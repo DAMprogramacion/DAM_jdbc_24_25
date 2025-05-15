@@ -16,7 +16,7 @@ public class Conexion {
     private Conexion() {
         Properties properties = new Properties();
         InputStream input = ClassLoader.getSystemClassLoader().
-                getResourceAsStream("sqlite.propierties");
+                getResourceAsStream("db.propierties");
         try {
             properties.load(input);
             String driver = properties.getProperty("driver");
