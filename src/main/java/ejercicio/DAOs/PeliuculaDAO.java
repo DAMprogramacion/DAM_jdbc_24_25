@@ -11,4 +11,5 @@ public interface PeliuculaDAO {
     List<Pelicula> obtenerTodasPeliculas();
     List<Pelicula> obtenerPeliculasSegunValoracion(int valoracion);
     List<Pelicula> obtenerTodasPeliculasOrdenadasPorValoracion();
+    Pelicula actualizarValoracionPelicula(String idPelicula, int nuevaValoracion);
 }

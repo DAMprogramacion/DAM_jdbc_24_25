@@ -47,4 +47,10 @@ public class Pelicula extends Video{
     public void setValoracion(int valoracion) {
         this.valoracion = valoracion;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s,%s,%s,%s,%s,%.0f,%s,%d", getIdVideo(), getTitulo(), getSinopsis(),
+                getImagen(), getDescarga(), getDuracion(),getDirector(), getValoracion() );
+    }
 }
