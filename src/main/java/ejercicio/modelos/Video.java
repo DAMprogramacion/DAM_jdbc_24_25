@@ -82,4 +82,5 @@ public class Video {
     public void setDuracion(float duracion) {
         this.duracion = duracion;
     }
+
 }

@@ -11,6 +11,10 @@ public class Serie extends Video{
         super(titulo, sinopsis, imagen, descarga, duracion);
         //this.idSerie = id;
     }
+    public Serie(String idSerie, String titulo, String sinopsis, String imagen, String descarga, float duracion) {
+        super(idSerie, titulo, sinopsis, imagen, descarga, duracion);
+        //this.idSerie = id;
+    }
 
    /* public String getIdSerie() {
         return idSerie;
@@ -22,5 +26,11 @@ public class Serie extends Video{
 
     public List<Temporada> getTemporadas() {
         return temporadas;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s,%s,%s,%s,%s,%.0f", getIdVideo(), getTitulo(), getSinopsis(),
+                getImagen(), getDescarga(), getDuracion());
     }
 }

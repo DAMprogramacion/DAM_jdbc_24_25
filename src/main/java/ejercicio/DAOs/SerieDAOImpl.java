@@ -5,9 +5,8 @@ import ejercicio.modelos.Capitulo;
 import ejercicio.modelos.Serie;
 import ejercicio.modelos.Temporada;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SerieDAOImpl implements SerieDAO{
@@ -74,12 +73,47 @@ public class SerieDAOImpl implements SerieDAO{
 
     @Override
     public List<Serie> obtenerTodasSeries() {
-        return List.of();
+        List<Serie> series = new ArrayList<>();
+        String sql = "SELECT idSerie, titulo, sinopsis, imagen, descarga, duracion FROM serie, video WHERE idSerie = idVideo ;";
+        try (Statement statement = conexion.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                String idSerie  = resultSet.getString("idSerie");
+                String titulo   = resultSet.getString("titulo");
+                String sinopsis = resultSet.getString("sinopsis");
+                String imagen   = resultSet.getString("imagen");
+                String descarga = resultSet.getString("descarga");
+                float  duracion = resultSet.getFloat("duracion");
+                Serie serie = new Serie(idSerie, titulo, sinopsis, imagen, descarga, duracion);
+                series.add(serie);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return series;
     }
 
     @Override
     public Serie obtenerSeriePorId(String id) {
-        return null;
+        String sql = "SELECT * FROM video where idVideo = ?;";
+        Serie serie = null;
+        try (PreparedStatement statement = conexion.prepareStatement(sql)) {
+            statement.setString(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+               // String idSerie  = resultSet.getString("idVideo");
+                String titulo   = resultSet.getString("titulo");
+                String sinopsis = resultSet.getString("sinopsis");
+                String imagen   = resultSet.getString("imagen");
+                String descarga = resultSet.getString("descarga");
+                float  duracion = resultSet.getFloat("duracion");
+                serie = new Serie(id, titulo, sinopsis, imagen, descarga, duracion);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return serie;
     }
 
     @Override
@@ -94,10 +128,14 @@ public class SerieDAOImpl implements SerieDAO{
 
     public static void main(String[] args) {
         SerieDAO dao = new SerieDAOImpl();
-        Serie serie2 = new Serie("titulo serie 2", "sinsopsis serie 2",
+        /*Serie serie2 = new Serie("titulo serie 2", "sinsopsis serie 2",
                 "/home/imagen/imagenSerie2", "/home/serie/descargaSerie2", 455);
         dao.crearSerie(serie2);
         boolean exito = dao.borrarSerie("25ac6cbd-376e-4f70-a6d3-6efe40cfddda");
         System.out.printf("Borrado de serie? %B%n", exito);
+        List<Serie> series = dao.obtenerTodasSeries();
+        series.forEach(System.out::println);*/
+        Serie serie = dao.obtenerSeriePorId("f8af6fbc-a06e-4a64-ab5a-cb3c58a8fab7");
+        System.out.println(serie);
     }
 }
