@@ -1,4 +1,4 @@
-package mock_examen;
+package mock_exam;
 
 import org.sqlite.SQLiteConfig;
 
@@ -7,10 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionDB {
+    private static ConnectionDB connectionDB = null;
     private static String URL_DB = "jdbc:sqlite:databases/cities.db";
     private Connection connection;
 
-    public ConnectionDB() {
+    private ConnectionDB() {
         try {
             SQLiteConfig config = new SQLiteConfig();
             config.enforceForeignKeys(true);
@@ -18,6 +19,12 @@ public class ConnectionDB {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static ConnectionDB getInstance() {
+        if (connectionDB == null)
+            connectionDB = new ConnectionDB();
+        return connectionDB;
     }
 
     public Connection getConnection() {
