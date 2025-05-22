@@ -118,6 +118,9 @@ public class SerieDAOImpl implements SerieDAO{
 
     @Override
     public void crearTemporada(Temporada temporada) {
+        //comprobar que existe la serie
+        //comprobar que no existe la temporada-serie
+        //sql = insert into temporada valuers(.......
 
     }
 
